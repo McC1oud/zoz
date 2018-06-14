@@ -11,6 +11,7 @@ public class ServerData : NetworkBehaviour {
     {
         currentMessage = newMessage;
 
+        //RpcCastNewMessage(currentMessage);
     }
 /*
     [ClientRpc]
