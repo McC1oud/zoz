@@ -35,7 +35,7 @@ public class TextManagerHandler : NetworkBehaviour {
             return;
         }
 	}
-
+    
     private void UpdateMessages(string arg0)
     {
         if (chatBox.text != "")
@@ -59,7 +59,7 @@ public class TextManagerHandler : NetworkBehaviour {
             }
         }
     }
-
+    
     void Update ()
     {
 
