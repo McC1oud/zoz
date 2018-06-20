@@ -30,9 +30,8 @@ public class TextManagerHandler : NetworkBehaviour {
             return;
         }
 	}
-	
-
-	void Update ()
+    
+    private void UpdateMessages(string arg0)
     {
         if (chatBox.text != "")
         {
@@ -60,9 +59,10 @@ public class TextManagerHandler : NetworkBehaviour {
                 //Debug.Log("Space");
             }
         }
-
-		*/
-	}
+    }
+    
+    void Update ()
+    {
 
     public void SendMessageToChat(string text)
     {
