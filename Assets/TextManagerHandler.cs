@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System;
 
 public class TextManagerHandler : NetworkBehaviour {
 
+    public string currentServerMessage;
+    public string playerName;
+
     public int maxMessages = 100;
 
-    public GameObject serverReference;
-
     public GameObject chatPanel, textObject;
-    public InputField chatBox;
+    public InputField chatBox, nameBox;
 
     [SerializeField]
     List<Message> messageList = new List<Message>();
@@ -19,7 +21,10 @@ public class TextManagerHandler : NetworkBehaviour {
 
 	void Start ()
     {
-        if(isServer)
+        nameBox.onEndEdit.AddListener(SetPlayerName);
+        chatBox.onEndEdit.AddListener(UpdateMessages);
+
+        if (isServer)
         {
             return;
         }
@@ -30,19 +35,8 @@ public class TextManagerHandler : NetworkBehaviour {
             return;
         }
 	}
-<<<<<<< Updated upstream
-    
-    private void UpdateMessages(string arg0)
-=======
-<<<<<<< HEAD
-	
 
-	void Update ()
-=======
-    
     private void UpdateMessages(string arg0)
->>>>>>> DeletedPrefab
->>>>>>> Stashed changes
     {
         if (chatBox.text != "")
         {
@@ -52,28 +46,26 @@ public class TextManagerHandler : NetworkBehaviour {
                 chatBox.text = "";
             }
         }
-        /*
-        else
-        {
-            if (!chatBox.isFocused && Input.GetKeyDown(KeyCode.Return))
-            {
-                chatBox.ActivateInputField();
-            }
-        }
-           
+    }
 
-        if(!chatBox.isFocused)
+    private void SetPlayerName(string arg0)
+    {
+        if (nameBox.text != "")
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                //SendMessageToChat("You pressed space!");
-                //Debug.Log("Space");
+                playerName = nameBox.text;
+                Destroy(nameBox.gameObject);
             }
         }
     }
-    
+
     void Update ()
     {
+
+    }
+
+
 
     public void SendMessageToChat(string text)
     {
@@ -83,24 +75,36 @@ public class TextManagerHandler : NetworkBehaviour {
             messageList.Remove(messageList[0]);
         }
 
+        CmdSendThisToServer(playerName + ": " + text);
+    }
+    
+    [Command]
+    public void CmdSendThisToServer(string messageToServer)
+    {
+        currentServerMessage = messageToServer;
+
+        RpcSendThisToClients(currentServerMessage);
+    }
+
+    [ClientRpc]
+    public void RpcSendThisToClients(string messageToClients)
+    {
+        print(messageToClients);
+
         Message newMessage = new Message();
 
-        newMessage.text = text;
+        newMessage.text = messageToClients;
 
         GameObject newText = Instantiate(textObject, chatPanel.transform);
 
         newMessage.textObject = newText.GetComponent<Text>();
 
-        newMessage.textObject.text = "Nelson: " + newMessage.text;
-
-        serverReference.transform.GetComponent<ServerData>().ServerMessages(newMessage.textObject.text);
-
-        newMessage.textObject.text = serverReference.transform.GetComponent<ServerData>().currentMessage;
+        newMessage.textObject.text = newMessage.text;
 
         messageList.Add(newMessage);
-
-
     }
+
+
 }
 
 [System.Serializable]
@@ -109,3 +113,6 @@ public class Message
     public string text;
     public Text textObject;
 }
+
+
+
