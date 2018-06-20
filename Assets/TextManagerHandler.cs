@@ -30,8 +30,19 @@ public class TextManagerHandler : NetworkBehaviour {
             return;
         }
 	}
+<<<<<<< Updated upstream
     
     private void UpdateMessages(string arg0)
+=======
+<<<<<<< HEAD
+	
+
+	void Update ()
+=======
+    
+    private void UpdateMessages(string arg0)
+>>>>>>> DeletedPrefab
+>>>>>>> Stashed changes
     {
         if (chatBox.text != "")
         {
