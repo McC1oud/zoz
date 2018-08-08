@@ -1,6 +1,6 @@
 WindowsStandalone
 PlayerPath?
-C:/Users/McC1oud/Desktop/Digtroid/Digtroid.exe
+C:/Users/McC1oud/Desktop/DigTroid/DigTroid.exe
 SceneListBegin?
 Assets/Tests/MS/SceneMS.unity
 SceneListEnd?
@@ -148,4 +148,4 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 d27f319795abf4a44404491859328f68 Assembly-CSharp.dll:.MarchingSquares
-452cd1c60f5712ff453519241589f923 Assembly-CSharp.dll:.VoxelMap
+ba693a6e82fd8b8faf2a327be20280bc Assembly-CSharp.dll:.VoxelMap

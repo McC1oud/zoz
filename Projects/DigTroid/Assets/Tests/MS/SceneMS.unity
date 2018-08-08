@@ -148,7 +148,7 @@ MonoBehaviour:
   stencilVisualizations:
   - {fileID: 302633831}
   - {fileID: 1023778164}
-  snapToGrid: 1
+  snapToGrid: 0
 --- !u!4 &25102396
 Transform:
   m_ObjectHideFlags: 0
