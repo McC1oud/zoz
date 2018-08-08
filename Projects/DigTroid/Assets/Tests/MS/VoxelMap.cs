@@ -11,6 +11,10 @@ public class VoxelMap : MonoBehaviour {
 
     public VoxelGrid voxelGridPrefab;
 
+    public Transform[] stencilVisualizations;
+
+    public bool snapToGrid;
+
     private VoxelGrid[] chunks;
 
     private float chunkSize, voxelSize, halfSize;
@@ -41,20 +45,63 @@ public class VoxelMap : MonoBehaviour {
         chunk.transform.parent = transform;
         chunk.transform.localPosition = new Vector3(x * chunkSize - halfSize, y * chunkSize - halfSize);
         chunks[i] = chunk;
+        if (x > 0)
+        {
+            chunks[i - 1].xNeighbor = chunk;
+        }
+        if (y > 0)
+        {
+            chunks[i - chunkResolution].yNeighbor = chunk;
+            if (x > 0)
+            {
+                chunks[i - chunkResolution - 1].xyNeighbor = chunk;
+            }
+        }
     }
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        Transform visualization = stencilVisualizations[stencilIndex];
+
+        if (stencilIndex == 0)
         {
-            RaycastHit hitInfo;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo))
+            stencilVisualizations[1].gameObject.SetActive(false);
+        }
+
+        if (stencilIndex == 1)
+        {
+            stencilVisualizations[0].gameObject.SetActive(false);
+        }
+
+        RaycastHit hitInfo;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo) &&
+            hitInfo.collider.gameObject == gameObject)
+        {
+            Vector2 center = transform.InverseTransformPoint(hitInfo.point);
+            center.x += halfSize;
+            center.y += halfSize;
+            if (snapToGrid)
             {
-                if (hitInfo.collider.gameObject == gameObject)
-                {
-                    EditVoxels(transform.InverseTransformPoint(hitInfo.point));
-                }
+                center.x = ((int)(center.x / voxelSize) + 0.5f) * voxelSize;
+                center.y = ((int)(center.y / voxelSize) + 0.5f) * voxelSize;
             }
+
+            if (Input.GetMouseButton(0))
+            {
+                EditVoxels(center);
+            }
+
+            center.x -= halfSize;
+            center.y -= halfSize;
+            visualization.localPosition = center;
+            visualization.localScale = Vector3.one * ((radiusIndex + 0.5f) * voxelSize * 2f);
+            visualization.gameObject.SetActive(true);
+
+
+        }
+        else
+        {
+            visualization.gameObject.SetActive(false);
         }
     }
 
@@ -69,49 +116,44 @@ public class VoxelMap : MonoBehaviour {
         new VoxelStencilCircle()
     };
 
-    private void EditVoxels(Vector3 point)
+    private void EditVoxels(Vector2 center)
     {
-        int centerX = (int)((point.x + halfSize) / voxelSize);
-        int centerY = (int)((point.y + halfSize) / voxelSize);
+        VoxelStencil activeStencil = stencils[stencilIndex];
+        activeStencil.Initialize(fillTypeIndex == 0, (radiusIndex + 0.5f) * voxelSize);
+        activeStencil.SetCenter(center.x, center.y);
 
-        int xStart = (centerX - radiusIndex) / voxelResolution;
+        int xStart = (int)((activeStencil.XStart - voxelSize) / chunkSize);
         if (xStart < 0)
         {
             xStart = 0;
         }
-        int xEnd = (centerX + radiusIndex) / voxelResolution;
+        int xEnd = (int)((activeStencil.XEnd + voxelSize) / chunkSize);
         if (xEnd >= chunkResolution)
         {
             xEnd = chunkResolution - 1;
         }
-        int yStart = (centerY - radiusIndex) / voxelResolution;
+        int yStart = (int)((activeStencil.YStart - voxelSize) / chunkSize);
         if (yStart < 0)
         {
             yStart = 0;
         }
-        int yEnd = (centerY + radiusIndex) / voxelResolution;
+        int yEnd = (int)((activeStencil.YEnd + voxelSize) / chunkSize);
         if (yEnd >= chunkResolution)
         {
             yEnd = chunkResolution - 1;
         }
 
-        VoxelStencil activeStencil = stencils[stencilIndex];
-        activeStencil.Initialize(fillTypeIndex == 0, radiusIndex);
-
-        int voxelYOffset = yStart * voxelResolution;
-        for (int y = yStart; y <= yEnd; y++)
+        for (int y = yEnd; y >= yStart; y--)
         {
-            int i = y * chunkResolution + xStart;
-            int voxelXOffset = xStart * voxelResolution;
-            for (int x = xStart; x <= xEnd; x++, i++)
+            int i = y * chunkResolution + xEnd;
+            for (int x = xEnd; x >= xStart; x--, i--)
             {
-                activeStencil.SetCenter(centerX - voxelXOffset, centerY - voxelYOffset);
+                activeStencil.SetCenter(center.x - x * chunkSize, center.y - y * chunkSize);
                 chunks[i].Apply(activeStencil);
-                voxelXOffset += voxelResolution;
             }
-            voxelYOffset += voxelResolution;
         }
     }
+
 
 
     private void OnGUI()

@@ -98,4 +98,7 @@ MonoBehaviour:
   resolution: 0
   voxelPrefab: {fileID: 1742285772023904, guid: 1ef36e62931b5e648b95604aa3aa1136,
     type: 2}
+  xNeighbor: {fileID: 0}
+  yNeighbor: {fileID: 0}
+  xyNeighbor: {fileID: 0}
   voxelScale: {x: 0, y: 0, z: 0}
