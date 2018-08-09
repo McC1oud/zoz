@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 114767574400868522}
   - component: {fileID: 33016922172079094}
   - component: {fileID: 23108217846760090}
-  m_Layer: 0
+  - component: {fileID: 64964606505238888}
+  m_Layer: 2
   m_Name: VoxelGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,6 +85,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1840974554994966}
   m_Mesh: {fileID: 0}
+--- !u!64 &64964606505238888
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840974554994966}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 0}
 --- !u!114 &114767574400868522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -102,3 +117,4 @@ MonoBehaviour:
   yNeighbor: {fileID: 0}
   xyNeighbor: {fileID: 0}
   voxelScale: {x: 0, y: 0, z: 0}
+  meshCollider: {fileID: 0}

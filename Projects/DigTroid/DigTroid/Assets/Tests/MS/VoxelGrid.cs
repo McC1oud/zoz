@@ -28,10 +28,18 @@ public class VoxelGrid : MonoBehaviour {
     private int[] rowCacheMax, rowCacheMin;
     private int edgeCacheMin, edgeCacheMax;
 
+    public MeshCollider meshCollider;
 
+    private void CombineMeshes()
+    {
+
+    }
 
     public void Initialize( int resolution, float size)
     {
+        meshCollider = GetComponent<MeshCollider>();
+
+        //turnOnVoxels();
         this.resolution = resolution;
         gridSize = size;
         voxelSize = 1f / resolution;
@@ -152,8 +160,11 @@ public class VoxelGrid : MonoBehaviour {
         {
             uv[i] = new Vector2(vertices[i].x, vertices[i].y);
         }
-        
 
+        meshCollider.sharedMesh = mesh;
+        //Destroy(GetComponent<MeshCollider>());
+        //AddComponent<MeshCollider>();
+        CombineMeshes();
         mesh.uv = uv;
     }
 

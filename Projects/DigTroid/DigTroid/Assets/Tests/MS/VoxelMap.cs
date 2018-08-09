@@ -19,6 +19,8 @@ public class VoxelMap : MonoBehaviour {
 
     private float chunkSize, voxelSize, halfSize;
 
+    public LayerMask raycastLayers;
+
     private void Awake()
     {
         halfSize = size * 0.5f;
@@ -74,6 +76,8 @@ public class VoxelMap : MonoBehaviour {
         }
 
         RaycastHit hitInfo;
+        //Physics.lay = raycastLayers.value;
+
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo) &&
             hitInfo.collider.gameObject == gameObject)
         {
