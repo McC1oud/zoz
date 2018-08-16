@@ -20,6 +20,21 @@ public class VoxelMap : MonoBehaviour {
     private float chunkSize, voxelSize, halfSize;
 
     public LayerMask raycastLayers;
+    /*
+    private static string[] fillTypeNames = { "Filled", "Empty" };
+    private static string[] radiusNames = { "0", "1", "2", "3", "4", "5" };
+    private static string[] stencilNames = { "Square", "Circle" };
+    */
+    public int fillTypeIndex = 1, radiusIndex = 2, stencilIndex = 1;
+
+    private VoxelStencil[] stencils = {
+        new VoxelStencil(),
+        new VoxelStencilCircle()
+    };
+
+    Vector2 worldCenter = new Vector2(0,0);
+
+
 
     private void Awake()
     {
@@ -38,6 +53,12 @@ public class VoxelMap : MonoBehaviour {
 
         BoxCollider box = gameObject.AddComponent<BoxCollider>();
         box.size = new Vector3(size, size);
+    }
+
+    private void Start()
+    {
+        
+        SetStageVoxels();
     }
 
     private void CreateChunk(int i, int x, int y)
@@ -109,16 +130,7 @@ public class VoxelMap : MonoBehaviour {
         }
     }
 
-    private static string[] fillTypeNames = { "Filled", "Empty" };
-    private static string[] radiusNames = { "0", "1", "2", "3", "4", "5" };
-    private static string[] stencilNames = { "Square", "Circle" };
 
-    private int fillTypeIndex, radiusIndex, stencilIndex;
-
-    private VoxelStencil[] stencils = {
-        new VoxelStencil(),
-        new VoxelStencilCircle()
-    };
 
     private void EditVoxels(Vector2 center)
     {
@@ -158,8 +170,45 @@ public class VoxelMap : MonoBehaviour {
         }
     }
 
+    private void SetStageVoxels()
+    {
+        VoxelStencil activeStencil = stencils[0];
+        activeStencil.Initialize(fillTypeIndex == 1, 100);
+        activeStencil.SetCenter(worldCenter.x, worldCenter.y);
 
+        int xStart = (int)((activeStencil.XStart - voxelSize) / chunkSize);
+        if (xStart < 0)
+        {
+            xStart = 0;
+        }
+        int xEnd = (int)((activeStencil.XEnd + voxelSize) / chunkSize);
+        if (xEnd >= chunkResolution)
+        {
+            xEnd = chunkResolution - 1;
+        }
+        int yStart = (int)((activeStencil.YStart - voxelSize) / chunkSize);
+        if (yStart < 0)
+        {
+            yStart = 0;
+        }
+        int yEnd = (int)((activeStencil.YEnd + voxelSize) / chunkSize);
+        if (yEnd >= chunkResolution)
+        {
+            yEnd = chunkResolution - 1;
+        }
 
+        for (int y = yEnd; y >= yStart; y--)
+        {
+            int i = y * chunkResolution + xEnd;
+            for (int x = xEnd; x >= xStart; x--, i--)
+            {
+                activeStencil.SetCenter(worldCenter.x - x * chunkSize, worldCenter.y - y * chunkSize);
+                chunks[i].Apply(activeStencil);
+            }
+        }
+    }
+
+    /*
     private void OnGUI()
     {
         GUILayout.BeginArea(new Rect(4f, 4f, 150f, 500f));
@@ -171,4 +220,7 @@ public class VoxelMap : MonoBehaviour {
         stencilIndex = GUILayout.SelectionGrid(stencilIndex, stencilNames, 2);
         GUILayout.EndArea();
     }
+
+    */
+
 }

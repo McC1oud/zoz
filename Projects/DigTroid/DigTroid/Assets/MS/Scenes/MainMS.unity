@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 25102396}
   - component: {fileID: 25102395}
+  - component: {fileID: 25102397}
   m_Layer: 0
   m_Name: VoxelMap
   m_TagString: Untagged
@@ -152,6 +153,9 @@ MonoBehaviour:
   raycastLayers:
     serializedVersion: 2
     m_Bits: 0
+  fillTypeIndex: 1
+  radiusIndex: 2
+  stencilIndex: 1
 --- !u!4 &25102396
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +171,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &25102397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 25102394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a3d78e17d5c2b469721dbe98b62929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldScript: {fileID: 25102394}
 --- !u!1 &302633830
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +267,7 @@ GameObject:
   - component: {fileID: 538918069}
   - component: {fileID: 538918068}
   - component: {fileID: 538918067}
+  - component: {fileID: 538918072}
   m_Layer: 11
   m_Name: DestroyBar
   m_TagString: Untagged
@@ -336,6 +353,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &538918072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 538918066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97ec4e9ab47dc449adbd023d6e72a42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aNBalls: {fileID: 1674566434202408, guid: 1daa65f37acb35e42bfdea0080fb3f2e, type: 2}
 --- !u!1 &885261388
 GameObject:
   m_ObjectHideFlags: 0

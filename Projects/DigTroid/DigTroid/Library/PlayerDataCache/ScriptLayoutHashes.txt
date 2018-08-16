@@ -2,7 +2,9 @@ WindowsStandalone
 PlayerPath?
 C:/Users/McC1oud/Desktop/DigTroid_v051/DigTroid_v051.exe
 SceneListBegin?
-Assets/Tests/MS/SceneMS.unity
+Assets/MS/Scenes/StartScreen.unity
+Assets/MS/Scenes/MainMS.unity
+Assets/MS/Scenes/MSTechDemo.unity
 SceneListEnd?
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 cf455f7a806648c6ed4c7d3e3f8a0e03 UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -114,7 +116,8 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
-394147ff195ba5c94cd7778cded5ba7e Assembly-CSharp.dll:.CharacterControls
+dd5481137759597d614818793c90a7fe Assembly-CSharp.dll:.MovingaGuy
+d71f734b3919dc8348359060b14e4b84 Assembly-CSharp.dll:.CharacterControls
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -129,6 +132,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 3f32f08a64daf40b09ed864d96fe3840 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.MySceneScript
 48d3479fb4e06dec86f5dd07b7867d94 Assembly-CSharp.dll:.SpawnaBall
 59f2a81543c6cb2f0e491274e97348c0 Assembly-CSharp.dll:.VoxelGrid
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
@@ -148,6 +152,6 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
-d27f319795abf4a44404491859328f68 Assembly-CSharp.dll:.MarchingSquares
-b872465d4a34ba0256ab14a471a1718b Assembly-CSharp.dll:.VoxelMap
+16108622fcc2d1d1105f0be759c386c8 Assembly-CSharp.dll:.VoxelMap
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DestroyBalls
+610711becbd882954383b5038bf0094f Assembly-CSharp.dll:.TechGUI
