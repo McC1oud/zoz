@@ -6,12 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MS/Scenes/StartScreen.unity
-    guid: d5c34b3b361ebe446970483739c805c8
-  - enabled: 1
-    path: Assets/MS/Scenes/MainMS.unity
-    guid: b8c146c76b5bf054383b51521df52ee7
-  - enabled: 1
-    path: Assets/MS/Scenes/MSTechDemo.unity
-    guid: 53bb036b6c0fc0742bf26b84612efc1d
+    path: Assets/MS/Scenes/Scene.unity
+    guid: ec4d2cb46e7954dbb894c149c58535b8
   m_configObjects: {}
