@@ -19,7 +19,7 @@ public class CameraControls : MonoBehaviour
     {
         if (Input.GetKey("w"))
         {
-            if (transform.position.y <= 8f)
+            if (transform.position.y <= 12)
             {
                 transform.Translate(new Vector3(0, speed, 0));
             }
@@ -27,7 +27,7 @@ public class CameraControls : MonoBehaviour
 
         if (Input.GetKey("s"))
         {
-            if (transform.position.y >= -12f)
+            if (transform.position.y >= -6f)
             {
                 transform.Translate(new Vector3(0, -speed, 0));
             }

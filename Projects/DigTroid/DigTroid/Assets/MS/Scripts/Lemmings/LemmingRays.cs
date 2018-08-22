@@ -12,21 +12,28 @@ public class LemmingRays : MonoBehaviour {
     public bool grounded = false;
 
     private RaycastHit hitDown;
+    private RaycastHit hitLeft;
+    private RaycastHit hitRight;
+    private RaycastHit hitUp;
 
     private bool xDirection = true;
 
-    public GameObject rightCollider;
-    public GameObject leftCollider;
+    //public GameObject rightCollider;
+    //public GameObject leftCollider;
+
+    public GameObject troidianModel;
 
 
 
     void Start () {
 
-        rightCollider.transform.GetComponent<LemmingFlipDirection>().sendAFlipMessage += flipDirections;
+        //rightCollider.transform.GetComponent<LemmingFlipDirection>().sendAFlipMessage += flipDirections;
 
-        leftCollider.transform.GetComponent<LemmingFlipDirection>().sendAFlipMessage += flipDirections;
+        //leftCollider.transform.GetComponent<LemmingFlipDirection>().sendAFlipMessage += flipDirections;
 
-        this.leftCollider.transform.GetComponent<BoxCollider>().enabled = false;
+        //this.leftCollider.transform.GetComponent<BoxCollider>().enabled = false;
+
+        troidianModel = this.gameObject.transform.GetChild(0).gameObject;
 
     }
 	
@@ -35,11 +42,17 @@ public class LemmingRays : MonoBehaviour {
 
         BuildCollisionData();
 
-        //float _Horiz = Input.GetAxis("Horizontal");
+        if(transform.position.x + 0.2f >= hitRight.point.x)
+        {
+            xDirection = false;
+            troidianModel.transform.Rotate(0,180,0);
+        }
 
-        //newLocation.x += _Horiz * walkSpeed;
-
-        //transform.position = newLocation;
+        if (transform.position.x - 0.2f <= hitLeft.point.x)
+        {
+            xDirection = true;
+            troidianModel.transform.Rotate(0, 180, 0);
+        }
 
         if (xDirection == true)
         {
@@ -84,14 +97,39 @@ public class LemmingRays : MonoBehaviour {
     private void BuildCollisionData()
     {
         Vector3 originOffset = new Vector3(transform.position.x, transform.position.y + 0.25f, 0);
+
         if (Physics.Raycast(originOffset, Vector3.down, out hitDown, 500))
         {
             Debug.DrawLine(originOffset, hitDown.point, Color.blue);
         }
 
+        Vector3 rightOrigin = transform.position; rightOrigin.y = rightOrigin.y + 0.5f;
+        rightOrigin.y -= 0.1f;
+
+        if (Physics.Raycast(rightOrigin, Vector3.right, out hitRight, 500))
+        {
+            Debug.DrawLine(rightOrigin, hitRight.point, Color.blue);
+        }
+        else
+        {
+            Debug.DrawLine(rightOrigin, hitRight.point, Color.red);
+        }
+
+        Vector3 leftOrigin = transform.position; leftOrigin.y = leftOrigin.y + 0.5f;
+        leftOrigin.y -= 0.1f;
+
+        if (Physics.Raycast(leftOrigin, Vector3.left, out hitLeft, 500))
+        {
+            Debug.DrawLine(leftOrigin, hitLeft.point, Color.blue);
+        }
+        else
+        {
+            Debug.DrawLine(leftOrigin, hitLeft.point, Color.red);
+        }
+
 
     }
-
+    /*
     public void flipDirections()
     {
 
@@ -114,5 +152,5 @@ public class LemmingRays : MonoBehaviour {
 
 
     }
-
+*/
 }

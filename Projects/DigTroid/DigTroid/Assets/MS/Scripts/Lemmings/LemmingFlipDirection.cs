@@ -10,7 +10,7 @@ public class LemmingFlipDirection : MonoBehaviour {
     private bool cooldownAvailable = true;
 
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if(other.tag == "stageData")
         {
