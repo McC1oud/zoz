@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class LemmingRays : MonoBehaviour {
 
+    int selectionLayerMask = 1 << 12;
+
     private Vector3 newLocation;
 
     public float gravityVal = 0.16f;
     public float walkSpeed;
 
     public bool grounded = false;
+    public bool doingUtility = false;
 
     private RaycastHit hitDown;
     private RaycastHit hitLeft;
     private RaycastHit hitRight;
     private RaycastHit hitUp;
 
-    private bool xDirection = true;
+    public bool xDirection = true;
 
     //public GameObject rightCollider;
     //public GameObject leftCollider;
@@ -41,50 +44,53 @@ public class LemmingRays : MonoBehaviour {
 	void Update () {
 
         BuildCollisionData();
-
-        if(transform.position.x + 0.2f >= hitRight.point.x)
+        if (!doingUtility)
         {
-            xDirection = false;
-            troidianModel.transform.Rotate(0,180,0);
+            if (transform.position.x + 0.2f >= hitRight.point.x)
+            {
+                xDirection = false;
+                troidianModel.transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+
+            if (transform.position.x - 0.2f <= hitLeft.point.x)
+            {
+                xDirection = true;
+                troidianModel.transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+
+            if (xDirection == true)
+            {
+                newLocation.x += walkSpeed;
+
+            }
+            else
+            {
+                newLocation.x -= walkSpeed;
+
+            }
         }
 
-        if (transform.position.x - 0.2f <= hitLeft.point.x)
+        if (!doingUtility)
         {
-            xDirection = true;
-            troidianModel.transform.Rotate(0, 180, 0);
+            if (transform.position.y <= hitDown.point.y + gravityVal)
+            {
+                grounded = true;
+                newLocation.y = hitDown.point.y;
+                transform.position = newLocation;
+            }
+
+            if (transform.position.y - hitDown.point.y < 0.2f)
+            {
+                grounded = false;
+            }
+
+            if (!grounded)
+            {
+                newLocation = transform.position;
+
+                transform.position = GravityApplication(newLocation);
+            }
         }
-
-        if (xDirection == true)
-        {
-             newLocation.x += walkSpeed;
-
-        }
-        else
-        {
-            newLocation.x -= walkSpeed;
-           
-        }
-
-
-        if (transform.position.y <= hitDown.point.y + gravityVal)
-        {
-            grounded = true;
-            newLocation.y = hitDown.point.y;
-            transform.position = newLocation;
-        }
-
-        if (transform.position.y - hitDown.point.y < 0.2f)
-        {
-            grounded = false;
-        }
-
-        if (!grounded)
-        {
-            newLocation = transform.position;
-            
-            transform.position = GravityApplication(newLocation);
-        }
-
 
 	}
 
@@ -106,7 +112,7 @@ public class LemmingRays : MonoBehaviour {
         Vector3 rightOrigin = transform.position; rightOrigin.y = rightOrigin.y + 0.5f;
         rightOrigin.y -= 0.1f;
 
-        if (Physics.Raycast(rightOrigin, Vector3.right, out hitRight, 500))
+        if (Physics.Raycast(rightOrigin, Vector3.right, out hitRight, 500, selectionLayerMask))
         {
             Debug.DrawLine(rightOrigin, hitRight.point, Color.blue);
         }
@@ -118,7 +124,7 @@ public class LemmingRays : MonoBehaviour {
         Vector3 leftOrigin = transform.position; leftOrigin.y = leftOrigin.y + 0.5f;
         leftOrigin.y -= 0.1f;
 
-        if (Physics.Raycast(leftOrigin, Vector3.left, out hitLeft, 500))
+        if (Physics.Raycast(leftOrigin, Vector3.left, out hitLeft, 500, selectionLayerMask))
         {
             Debug.DrawLine(leftOrigin, hitLeft.point, Color.blue);
         }

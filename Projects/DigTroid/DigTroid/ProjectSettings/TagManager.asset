@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - stageData
+  - ignoreMe
+  - aToid
   layers:
   - Default
   - TransparentFX
@@ -15,11 +17,11 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
+  - Toid
   - PlayerBall
   - Destroyers
   - StageDataLayer
-  - 
+  - ToidSelector
   - 
   - 
   - 

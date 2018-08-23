@@ -21,6 +21,8 @@ public class MoveLemming : MonoBehaviour {
     }
 	
 	void Update () {
+
+        
         if(xDirection == true)
         {
             this.transform.Translate(new Vector3(speed * Time.deltaTime, onAHill, 0));
