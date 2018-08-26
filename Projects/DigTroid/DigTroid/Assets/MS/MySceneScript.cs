@@ -13,7 +13,9 @@ public class MySceneScript : MonoBehaviour {
 
     public void loadScene2()
     {
-        SceneManager.LoadScene("MSTechDemo");
+        SceneManager.LoadScene("TechDemo");
         
     }
+
+
 }

@@ -27,7 +27,7 @@ public class CameraControls : MonoBehaviour
 
         if (Input.GetKey("s"))
         {
-            if (transform.position.y >= -6f)
+            if (transform.position.y >= -5.5f)
             {
                 transform.Translate(new Vector3(0, -speed, 0));
             }
@@ -49,6 +49,16 @@ public class CameraControls : MonoBehaviour
             {
                 transform.Translate(new Vector3(speed, 0, 0));
             }
+        }
+
+        if(Input.GetKey("1"))
+        {
+            Camera.main.orthographic = true;
+        }
+
+        if (Input.GetKey("2"))
+        {
+            Camera.main.orthographic = false;
         }
 
     }

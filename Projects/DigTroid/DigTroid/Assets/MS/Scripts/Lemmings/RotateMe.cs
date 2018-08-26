@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class RotateMe : MonoBehaviour {
 
+    public bool lameSwitch = true;
+
 	// Use this for initialization
 	void Start () {
-        transform.GetComponent<SpriteRenderer>().color = new Color(0.5f, 1f, 1f, 0.25f);
+        if(lameSwitch)
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(0.5f, 1f, 1f, 0.25f);
+
+        }
 
     }
 	

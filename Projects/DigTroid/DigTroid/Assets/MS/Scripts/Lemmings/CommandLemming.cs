@@ -15,6 +15,9 @@ public class CommandLemming : MonoBehaviour {
     public GameObject currentSelected;
     public GameObject dummyObject;
 
+    private bool currentlyOnJob = false;
+
+
     void Start() {
 
     }
@@ -87,6 +90,8 @@ public class CommandLemming : MonoBehaviour {
     public void DeactivateBlockerToid()
     {
         CheckAvailableSelect();
+        
+
 
         bool characterHeading = currentSelected.GetComponent<LemmingRays>().xDirection;
         float headingVal = 0;
@@ -105,25 +110,109 @@ public class CommandLemming : MonoBehaviour {
 
     public void DigDown()
     {
+        if(!currentlyOnJob)
+        {
+            
+            currentlyOnJob = true;
+            CheckAvailableSelect();
 
-        CheckAvailableSelect();
-        
-        SetCharacterNeutral();
-        StartCoroutine("DiggitDown");
+            SetCharacterNeutral();
+            StartCoroutine("DiggitDown");
+        }
+       
 
     }
 
     public void DigRight()
     {
+        if (!currentlyOnJob)
+        {
+            currentlyOnJob = true;
+            CheckAvailableSelect();
 
-        CheckAvailableSelect();
+            //SetCharacterNeutral();
+            currentSelected.GetComponent<LemmingRays>().gravityVal = 0;
+            currentSelected.GetComponent<LemmingRays>().doingUtility = true;
+            StartCoroutine("DiggitRight");
 
-        //SetCharacterNeutral();
-        currentSelected.GetComponent<LemmingRays>().gravityVal = 0;
-        currentSelected.GetComponent<LemmingRays>().doingUtility = true;
-        StartCoroutine("DiggitRight");
+        }
+    }
 
+    public void DigRLeft()
+    {
 
+        if (!currentlyOnJob)
+        {
+            currentlyOnJob = true;
+            CheckAvailableSelect();
+
+            //SetCharacterNeutral();
+            currentSelected.GetComponent<LemmingRays>().gravityVal = 0;
+            currentSelected.GetComponent<LemmingRays>().doingUtility = true;
+            StartCoroutine("DiggitLeft");
+        }
+
+    }
+
+    public void DigUpLeft()
+    {
+
+        if (!currentlyOnJob)
+        {
+            currentlyOnJob = true;
+            CheckAvailableSelect();
+
+            //SetCharacterNeutral();
+            currentSelected.GetComponent<LemmingRays>().gravityVal = 0;
+            currentSelected.GetComponent<LemmingRays>().doingUtility = true;
+            StartCoroutine("DiggitUpLeft");
+        }
+
+    }
+
+    public void DigDownLeft()
+    {
+
+        if (!currentlyOnJob)
+        {
+            currentlyOnJob = true;
+            CheckAvailableSelect();
+
+            //SetCharacterNeutral();
+            currentSelected.GetComponent<LemmingRays>().gravityVal = 0;
+            currentSelected.GetComponent<LemmingRays>().doingUtility = true;
+            StartCoroutine("DiggitDownLeft");
+        }
+    }
+
+    public void DigDownRight()
+    {
+
+        if (!currentlyOnJob)
+        {
+            currentlyOnJob = true;
+            CheckAvailableSelect();
+
+            //SetCharacterNeutral();
+            currentSelected.GetComponent<LemmingRays>().gravityVal = 0;
+            currentSelected.GetComponent<LemmingRays>().doingUtility = true;
+            StartCoroutine("DiggitDownRight");
+        }
+    }
+
+    public void DigUpRight()
+    {
+
+        if (!currentlyOnJob)
+        {
+            currentlyOnJob = true;
+            CheckAvailableSelect();
+
+            //SetCharacterNeutral();
+            currentSelected.GetComponent<LemmingRays>().gravityVal = 0;
+            currentSelected.GetComponent<LemmingRays>().doingUtility = true;
+            StartCoroutine("DiggitUpRight");
+        }
     }
 
     public void SetCharacterNeutral()
@@ -145,43 +234,203 @@ public class CommandLemming : MonoBehaviour {
     IEnumerator DiggitDown()
     {
 
-        Vector3 whereGoingDown = currentSelected.transform.position;
+        GameObject toolCurrent = currentSelected.gameObject;
+        Vector3 whereGoingDown = toolCurrent.transform.position;
+        currentlyOnJob = false;
         int depth = 500;
         for (int i = 0; i < depth; i++)
         {
 
             whereGoingDown.y -= 0.005f;
 
-
-
-            currentSelected.transform.root.position = whereGoingDown;
-            Vector2 curTrans2D = new Vector2(currentSelected.transform.position.x + 10, (currentSelected.transform.position.y + 9.3f));
+            toolCurrent.transform.root.position = whereGoingDown;
+            Vector2 curTrans2D = new Vector2(toolCurrent.transform.position.x + 10, (toolCurrent.transform.position.y + 9.3f));
 
             mapReference.GetComponent<VoxelMap>().DigVoxels(curTrans2D);
+            if (toolCurrent.transform.root.position.y < -8f)
+            {
+                i = 500;
+            }
+
             yield return new WaitForSeconds(0.008f);
         }
         DeactivateBlockerToid();
+        currentlyOnJob = false;
+        
 
     }
 
     IEnumerator DiggitRight()
     {
-        Vector3 whereGoingRight = currentSelected.transform.position;
+        GameObject toolCurrent = currentSelected.gameObject;
+        Vector3 whereGoingRight = toolCurrent.transform.position;
+        currentlyOnJob = false;
         int depth = 500;
         for (int i = 0; i < depth; i++)
         {
            
             whereGoingRight.x += 0.005f;
 
- 
 
-            currentSelected.transform.root.position = whereGoingRight; 
-            Vector2 curTrans2D = new Vector2(currentSelected.transform.position.x + 10.1f, (currentSelected.transform.position.y + 9.3f));
+
+            toolCurrent.transform.root.position = whereGoingRight; 
+            Vector2 curTrans2D = new Vector2(toolCurrent.transform.position.x + 10.1f, (toolCurrent.transform.position.y + 9.3f));
 
             mapReference.GetComponent<VoxelMap>().DigVoxels(curTrans2D);
+            if (toolCurrent.transform.root.position.x > 9.9f)
+            {
+                i = 500;
+            }
             yield return new WaitForSeconds(0.008f);
         }
         DeactivateBlockerToid();
-        currentSelected.GetComponent<LemmingRays>().gravityVal = 0.025f;
+        toolCurrent.GetComponent<LemmingRays>().gravityVal = 0.025f;
+       
+    }
+
+    IEnumerator DiggitLeft()
+    {
+        GameObject toolCurrent = currentSelected.gameObject;
+        Vector3 whereGoingLeft = toolCurrent.transform.position;
+        currentlyOnJob = false;
+        int depth = 500;
+        for (int i = 0; i < depth; i++)
+        {
+
+            whereGoingLeft.x -= 0.005f;
+            
+            toolCurrent.transform.root.position = whereGoingLeft;
+            Vector2 curTrans2D = new Vector2(toolCurrent.transform.position.x + 9.9f, (toolCurrent.transform.position.y + 9.3f));
+
+            mapReference.GetComponent<VoxelMap>().DigVoxels(curTrans2D);
+
+            if (toolCurrent.transform.root.position.x < -9.9f)
+            {
+                i = 500;
+            }
+                yield return new WaitForSeconds(0.008f);
+        }
+        DeactivateBlockerToid();
+        toolCurrent.GetComponent<LemmingRays>().gravityVal = 0.025f;
+        
+    }
+    //Diags start here
+    IEnumerator DiggitUpLeft()
+    {
+        GameObject toolCurrent = currentSelected.gameObject;
+        Vector3 whereGoingUpLeft = toolCurrent.transform.position;
+        currentlyOnJob = false;
+        int depth = 500;
+        for (int i = 0; i < depth; i++)
+        {
+
+            whereGoingUpLeft.x -= 0.005f;
+            whereGoingUpLeft.y += 0.005f;
+
+
+
+            toolCurrent.transform.root.position = whereGoingUpLeft;
+            Vector2 curTrans2D = new Vector2(toolCurrent.transform.position.x + 9.9f, (toolCurrent.transform.position.y + 9.3f));
+
+            mapReference.GetComponent<VoxelMap>().DigVoxels(curTrans2D);
+
+            if (toolCurrent.transform.root.position.x < -9.8f || toolCurrent.transform.root.position.y > 9.8f)
+            {
+                i = 500;
+            }
+            yield return new WaitForSeconds(0.008f);
+        }
+        DeactivateBlockerToid();
+        toolCurrent.GetComponent<LemmingRays>().gravityVal = 0.025f;
+
+    }
+
+    IEnumerator DiggitDownLeft()
+    {
+        GameObject toolCurrent = currentSelected.gameObject;
+        Vector3 whereGoingDownLeft = toolCurrent.transform.position;
+        currentlyOnJob = false;
+        int depth = 500;
+        for (int i = 0; i < depth; i++)
+        {
+
+            whereGoingDownLeft.x -= 0.005f;
+            whereGoingDownLeft.y -= 0.005f;
+
+
+
+            toolCurrent.transform.root.position = whereGoingDownLeft;
+            Vector2 curTrans2D = new Vector2(toolCurrent.transform.position.x + 9.9f, (toolCurrent.transform.position.y + 9.3f));
+
+            mapReference.GetComponent<VoxelMap>().DigVoxels(curTrans2D);
+
+            if (toolCurrent.transform.root.position.x < -9.8f || toolCurrent.transform.root.position.y < -9.8f)
+            {
+                i = 500;
+            }
+
+            yield return new WaitForSeconds(0.008f);
+        }
+        DeactivateBlockerToid();
+        toolCurrent.GetComponent<LemmingRays>().gravityVal = 0.025f;
+
+    }
+
+    IEnumerator DiggitUpRight()
+    {
+        GameObject toolCurrent = currentSelected.gameObject;
+        Vector3 whereGoingUpRight = toolCurrent.transform.position;
+        currentlyOnJob = false;
+        int depth = 500;
+        for (int i = 0; i < depth; i++)
+        {
+
+            whereGoingUpRight.x += 0.005f;
+            whereGoingUpRight.y += 0.005f;
+
+
+
+            toolCurrent.transform.root.position = whereGoingUpRight;
+            Vector2 curTrans2D = new Vector2(toolCurrent.transform.position.x + 10.1f, (toolCurrent.transform.position.y + 9.3f));
+
+            mapReference.GetComponent<VoxelMap>().DigVoxels(curTrans2D);
+            if (toolCurrent.transform.root.position.x > 9.8f || toolCurrent.transform.root.position.y > 9.8f)
+            {
+                i = 500;
+            }
+            yield return new WaitForSeconds(0.008f);
+        }
+        DeactivateBlockerToid();
+        toolCurrent.GetComponent<LemmingRays>().gravityVal = 0.025f;
+
+    }
+
+    IEnumerator DiggitDownRight()
+    {
+        GameObject toolCurrent = currentSelected.gameObject;
+        Vector3 whereGoingDownRight = toolCurrent.transform.position;
+        currentlyOnJob = false;
+        int depth = 500;
+        for (int i = 0; i < depth; i++)
+        {
+
+            whereGoingDownRight.x += 0.005f;
+            whereGoingDownRight.y -= 0.005f;
+
+
+
+            toolCurrent.transform.root.position = whereGoingDownRight;
+            Vector2 curTrans2D = new Vector2(toolCurrent.transform.position.x + 10.1f, (toolCurrent.transform.position.y + 9.3f));
+
+            mapReference.GetComponent<VoxelMap>().DigVoxels(curTrans2D);
+            if (toolCurrent.transform.root.position.x > 9.8f || toolCurrent.transform.root.position.y < -9.8f)
+            {
+                i = 500;
+            }
+            yield return new WaitForSeconds(0.008f);
+        }
+        DeactivateBlockerToid();
+        toolCurrent.GetComponent<LemmingRays>().gravityVal = 0.025f;
+
     }
 }

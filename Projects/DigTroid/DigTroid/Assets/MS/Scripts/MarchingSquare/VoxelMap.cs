@@ -150,7 +150,7 @@ public class VoxelMap : MonoBehaviour {
         activeStencil.Initialize(
             fillTypeIndex == 1, 2.5f * voxelSize);
         activeStencil.SetCenter(center.x, center.y);
-        print(center);
+        
 
         int xStart = (int)((activeStencil.XStart - voxelSize) / chunkSize);
         if (xStart < 0)
